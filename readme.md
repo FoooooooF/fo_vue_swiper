@@ -1,5 +1,5 @@
 # fo_vue_swiper
-## 一个基于vue的swiper组件
+> 一个基于vue的swiper组件
 ## 使用
 ```bash
 npm install fo_vue_swiper --save

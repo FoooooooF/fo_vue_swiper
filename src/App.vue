@@ -1,20 +1,25 @@
 <template>
     <div class="app">
-        <v-title :title="{title:'moudle1'}" />
-        {{msg}}
+        <Swiper>
+            <Slide>
+                    1
+            </Slide>
+            <Slide>
+                    2
+            </Slide>
+            <Slide>
+                    3
+            </Slide>
+        </Swiper>
     </div>
 </template>
 <script>
-import Title from "../common/title.vue";
 export default {
     name:"module1",
     data(){
         return {
             msg:"this is a tempalte test 111"
         }
-    },
-    components:{
-        "v-title":Title
     },
     created(){
         console.log(this.$root.$options.module_id);
