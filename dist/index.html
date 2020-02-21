@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Components Test</title>
+    <script>
+        var $ModuleClass={};
+    </script>
+</head>
+<body>
+    <div id="app1">
+        <div class="container"></div>
+    </div>
+    <div id="app2">
+        <div class="container"></div>
+    </div>
+    <div id="app3">
+        <div class="container"></div>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./module1.js"></script>
+    <script src="./module2.js"></script>
+    <script>
+        new Vue({
+            module_id:"1",
+            el:"#app1 .container",
+            render: h => h($ModuleClass.moudle1)
+        })
+        new Vue({
+            module_id:"2",
+            el:"#app2 .container",
+            render: h => h($ModuleClass.moudle2)
+        })
+        new Vue({
+            module_id:"3",
+            el:"#app3 .container",
+            render: h => h($ModuleClass.moudle2)
+        })
+        //.$mount('#app2')
+    </script>
+</body>
+</html>
