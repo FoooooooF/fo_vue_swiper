@@ -1,7 +1,7 @@
 <template>
     <div class="app">
         <Swiper>
-            <Slide>
+            <!-- <Slide>
                     1
             </Slide>
             <Slide>
@@ -9,31 +9,36 @@
             </Slide>
             <Slide>
                     3
-            </Slide>
+            </Slide> -->
         </Swiper>
     </div>
 </template>
 <script>
-export default {
-    name:"module1",
-    data(){
-        return {
-            msg:"this is a tempalte test 111"
-        }
-    },
-    created(){
-        console.log(this.$root.$options.module_id);
-        // console.log(this.$el.parentElement.id);
-    },
-    mounted(){
-        //获取载入点的ID,获取个性化数据
-        console.log(this.$el.parentElement.id);
-        // window.mountpoint=this.$el;
+    export default {
+        name: "module1",
+        data() {
+            return {
+                config: {
+                    direction: "horizontal", //水平(horizontal)或垂直(vertical)。
+                    autoPlay: false, //自动滚动
+                    duration: 500, //一次滑动需要走多久
+                    interval: 2500, //两次滑动间隔的时间
+                    loop: false, //循环播放
+                    noSwiping: false, //不允许滑动
+                    offset: 20,
+                    pagination: { //分页设置
+                        top: "auto",
+                        bottom: "auto",
+                        left: "auto",
+                        right: "auto",
+                    }
+                }
+            }
+        },
     }
-}
 </script>
 <style lang="css" scoped>
-    .app{
+    .app {
         color: blue;
     }
 </style>
