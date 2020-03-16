@@ -1,6 +1,6 @@
 {
   "name": "fo_vue_swiper",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -9,6 +9,15 @@
     "build:npm": "npx webpack --config ./build/webpack.config.npm.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FoooooooF/fo_vue_swiper"
+  },
+  "keywords": [
+    "swiper",
+    "vue",
+    "mobile"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
