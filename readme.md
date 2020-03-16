@@ -1,5 +1,5 @@
 # fo_vue_swiper
-一个简短精悍的基于vue的移动端轮播插件 
+一个简短精悍的基于vue的移动端轮播插件. [示例地址](https://fooooooof.github.io/fo_vue_swiper/)
 
 > *提示*  
 > 只适合移动端使用;  

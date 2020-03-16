@@ -1,5 +1,6 @@
 <template>
     <div class="app">
+        <p class="app-tips">该组件紧针对手机端进行开发</p>
         <h3>1. 基本</h3>
         <pre>
             config1:{
@@ -78,6 +79,15 @@
         margin: 0;
         padding: 0;
     }
+    .app{
+        &-tips{
+            background-color: #f00;
+            text-align: center;
+            color: yellow;
+            font-size: 14px;
+            padding: 8px 0;
+        }
+    }
     pre{
         padding: 10px 0;
         background-color: #000;
@@ -89,7 +99,7 @@
         width: 100vw;
         background-color: #aaa;
         border-radius: 5px;
-        height: 200px;
+        height: 48vw;
         color: #fff;
         font-size: 20px;
         text-align: center;
