@@ -1,5 +1,4 @@
-import swiper from "./swiper.vue";
-function plugins (Vue){
-        Vue.component("Swiper",swiper)
-}
-export default plugins;
+import Swiper from "./swiper.vue";
+Swiper.install = Vue => Vue.component(Swiper.name, Swiper);
+
+export default Swiper;

@@ -2,10 +2,7 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
-  entry: {
-    module1:"./src/module1/index.js",
-    module2:"./src/module2/index.js",
-  },
+  entry: "./src/main.js",
   mode: 'production',
   module: {
     rules: [
@@ -22,10 +19,11 @@ module.exports = {
       // 它会应用到普通的 `.css` 文件
       // 以及 `.vue` 文件中的 `<style>` 块
       {
-        test: /\.css$/,
+        test: /\.(css|less)$/,
         use: [
           'vue-style-loader',
-          'css-loader'
+          'css-loader',
+          'less-loader'
         ]
       }
     ]

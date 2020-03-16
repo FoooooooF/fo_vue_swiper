@@ -89,7 +89,7 @@ npm run dev
 ```
 ## 组件打包
 ```
-npm run build:comp
+npm run build:npm
 ```
 ## 示例打包
 ```

@@ -1,11 +1,12 @@
 {
-  "name": "cmbcomponents",
-  "version": "1.0.0",
+  "name": "fo_vue_swiper",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "dev": "node ./build/dev-server.js",
-    "build": "npx webapck --config ./build/webpack.config.prd.js",
+    "build:page": "npx webpack --config ./build/webpack.config.page.js",
+    "build:npm": "npx webpack --config ./build/webpack.config.npm.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
