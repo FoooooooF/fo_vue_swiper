@@ -1,9 +1,5 @@
-import Swiper from './swiper.vue';
-// import Slide from './slide.vue';
-
-function pluigns(Vue){
-    Vue.component("Swiper",Swiper);
-    // Vue.component("Slide",Slide);
+import swiper from "./swiper.vue";
+function plugins (Vue){
+        Vue.component("Swiper",swiper)
 }
-
-export default pluigns
+export default plugins;

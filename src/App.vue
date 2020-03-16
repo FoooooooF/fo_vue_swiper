@@ -1,21 +1,11 @@
 <template>
     <div class="app">
-        <Swiper>
-            <!-- <Slide>
-                    1
-            </Slide>
-            <Slide>
-                    2
-            </Slide>
-            <Slide>
-                    3
-            </Slide> -->
-        </Swiper>
+        <Swiper></Swiper>
     </div>
 </template>
 <script>
     export default {
-        name: "module1",
+        name: "App",
         data() {
             return {
                 config: {
