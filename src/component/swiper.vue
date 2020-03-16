@@ -2,17 +2,7 @@
     <div class="swiper" @touchmove="(e)=>{e.preventDefault()}">
         <div class="swiper-container" ref="swiper-container" @touchstart="touchstart" @touchmove="touchmove"
             @touchend="touchend">
-            <div class="slides" index="0">
-                <!-- <img src="https://qiniu.epipe.cn/5456575529551388672?imageslim&imageView2/1/w/750/h/360" alt=""> -->
-                1 </div>
-            <div class="slides" index="1">
-
-                <!-- <img src="https://qiniu.epipe.cn/5430983074181545984?imageslim&imageView2/1/w/750/h/360" alt=""> -->
-                2 </div>
-            <div class="slides" index="2">
-
-                <!-- <img src="https://qiniu.epipe.cn/5464226412548325376?imageslim&imageView2/1/w/750/h/360" alt=""> -->
-                3 </div>
+           <slot />
         </div>
         <ul class="swiper-pagination" ref="swiper-pagination" v-if="mergeConfig.pagination">
             <li v-for="i in slidesLength" :key="i" class="swiper-pagination-item"
@@ -298,6 +288,7 @@
             bottom: 10px;
             z-index: 20;
             list-style: none;
+            padding: 0;
 
             &-item {
                 float: left;
@@ -320,16 +311,16 @@
     }
 
 
-    .slides {
-        flex-shrink: 0;
-        z-index: 10;
-        width: 85vw;
-        background-color: #aaa;
-        margin-right: 5vw;
-        border-radius: 5px;
-        height: 200px;
-        color: #fff;
-        font-size: 20px;
-        text-align: center;
-    }
+    // .slides {
+    //     flex-shrink: 0;
+    //     z-index: 10;
+    //     width: 85vw;
+    //     background-color: #aaa;
+    //     margin-right: 5vw;
+    //     border-radius: 5px;
+    //     height: 200px;
+    //     color: #fff;
+    //     font-size: 20px;
+    //     text-align: center;
+    // }
 </style>
