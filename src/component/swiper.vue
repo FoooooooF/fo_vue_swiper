@@ -1,6 +1,10 @@
 <template>
     <div class="swiper" @touchmove="(e)=>{e.preventDefault()}">
-        <div class="swiper-container" ref="swiper-container" @touchstart="touchstart" @touchmove="touchmove"
+        <div class="swiper-container" 
+            ref="swiper-container" 
+            :style="{'flex-direction':mergeConfig.direction==='vertical'?'column':''}"
+            @touchstart="touchstart" 
+            @touchmove="touchmove"
             @touchend="touchend">
            <slot />
         </div>
@@ -38,7 +42,7 @@
                         interval: 2500, //两次滑动间隔的时间
                         loop: false, //循环播放
                         noSwiping: false, //不允许滑动
-                        centeredSlides: true, //滑块居中显示
+                        centeredSlides: false, //滑块居中显示
                         pagination: { //分页设置
                             show: true, //显示
                             horizontalCenter: true, //水平居中
@@ -109,6 +113,7 @@
                 let slideWidth = this.container.children[0].offsetWidth; //滑块的宽度
                 for (let i = 0; i < this.container.children.length; i++) {
                     if (this.mergeConfig.direction === "vertical") {
+                        console.dir(this.container.children[i]);
                         this.slides.push({
                             offsetLeft: this.container.children[i].offsetTop,
                             index: i,
@@ -169,10 +174,10 @@
             },
 
             touchmove(e) { //处理滑块的跟手效果
-                this.claerTimer()
                 if (this.mergeConfig.noSwiping) {
                     return;
                 }
+                this.claerTimer()
                 let slide = 0;
                 if (this.mergeConfig.direction === "vertical") {
                     slide = e.touches[0].clientY - this.startPos.y;
@@ -187,7 +192,12 @@
                     }
                 }
                 let offsetLeft = this.slides[this.selected].offsetLeft * -1;
-                this.container.style.transform = `translate3d(${offsetLeft+slide}px, 0px, 0px)`;
+                 if (this.mergeConfig.direction === "vertical") {
+                    this.container.style.transform = `translate3d(0px, ${offsetLeft+slide}px, 0px)`;
+                } else {
+                    this.container.style.transform = `translate3d(${offsetLeft+slide}px, 0px, 0px)`;
+                }
+                
             },
             touchend(e) {
                 if (this.mergeConfig.noSwiping) {

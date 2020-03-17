@@ -77,6 +77,7 @@ Vue.use(swiper)
 |duration| 500|Number|一次滑动需要走多久|
 |interval| 2500|Number|两次滑动间隔的时间|
 |loop| false|Boolean|循环播放|
+|centeredSlides| false|Boolean|滑块水平居中|
 |noSwiping| false|Boolean|不允许滑动|
 |pagination|null|Object| 分页|
 |pagination.show|true|Boolean| 显示分页器|
