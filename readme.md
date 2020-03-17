@@ -88,11 +88,11 @@ Vue.use(swiper)
 npm install
 npm run dev
 ```
-## 组件打包
+## npm组件打包
 ```
 npm run build:npm
 ```
-## 示例打包
+## 示例docs打包
 ```
 npm run build:page
 ```
