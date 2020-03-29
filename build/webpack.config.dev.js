@@ -1,8 +1,14 @@
 // webpack.config.js
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const path=require("path");
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 
 module.exports = {
   entry: "./src/main.js",
+  output: {
+    path: path.resolve(__dirname, '../docs'),
+    filename: 'main.js',
+  },
   mode: 'development',
   devtool:"inline-source-map",
   module: {

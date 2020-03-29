@@ -1,5 +1,5 @@
 # fo_vue_swiper
-一个简短精悍的基于vue的移动端轮播插件. [示例地址](https://fooooooof.github.io/fo_vue_swiper/)
+一个基于vue的,轻量级的,移动端轮播插件. [示例地址](https://fooooooof.github.io/fo_vue_swiper/)
 
 > *提示*  
 > 只适合移动端使用;  
@@ -98,5 +98,5 @@ npm run build:page
 ```
 
 ## 参考
-> Api 设计参考swiper.js
+- Api 设计参考swiper.js
 - [手把手教你封装 Vue 组件，并使用 npm 发布](https://juejin.im/post/5b45df255188251b1d474860)

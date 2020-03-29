@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <p class="app-tips">该组件紧针对手机端进行开发,<br/>请在手机模式化查看此页面</p>
+        <p class="app-tips">该组件仅针对手机端进行开发,<br/>请在手机模式化查看此页面</p>
         <h3 class="app-title">1. 基本</h3>
         <Swiper>
             <div class="slides7" >
@@ -90,7 +90,7 @@
             </div>
         </Swiper>
         <h3 class="app-title">5.上下轮播&禁止滑动</h3>
-        <p  class="app-tips">一屏多图,滑块居中等功能<br/>在垂直(vertical)模式下没有适配</p>
+        <p  class="app-tips">一屏多图,滑块居中等功能<br/>在垂直(vertical)模式下不可用</p>
         <pre class="app-pre">
             config: {
                 direction:"vertical", //垂直方向轮播
