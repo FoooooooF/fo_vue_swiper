@@ -5,16 +5,14 @@
             :style="{'flex-direction':mergeConfig.direction==='vertical'?'column':''}"
             @touchstart="touchstart" 
             @touchmove="touchmove"
-            @touchend="touchend">
+            @touchend="touchend"
+            @touchcancel="touchend">
            <slot />
         </div>
-        <ul class="swiper-pagination" ref="swiper-pagination" v-if="mergeConfig.pagination">
-            <li v-for="i in slidesLength" :key="i" class="swiper-pagination-item"
-                :class="{active:mergeConfig.loop?selected==i+1:selected==i-1}"></li>
-        </ul>
     </div>
 </template>
 <script>
+    import {clone} from "./utils.js"
     export default {
         name:"Swiper",
         data() {
@@ -32,26 +30,28 @@
             }
         },
         props: {
+            value:Number,
             config: {
                 type: Object,
-                default: function () {
-                    return {
-                        direction: "horizontal", //水平(horizontal)或垂直(vertical)。
-                        autoPlay: false, //自动滚动
-                        duration: 500, //一次滑动需要走多久
-                        interval: 2500, //两次滑动间隔的时间
-                        loop: false, //循环播放
-                        noSwiping: false, //不允许滑动
-                        centeredSlides: false, //滑块居中显示
-                        pagination: { //分页设置
-                            show: true, //显示
-                            horizontalCenter: true, //水平居中
-                        }
-                    }
-                }
+                // default: function () {
+                //     return {
+                //         direction: "horizontal", //水平(horizontal)或垂直(vertical)。
+                //         autoPlay: false, //自动滚动
+                //         duration: 500, //一次滑动需要走多久
+                //         interval: 2500, //两次滑动间隔的时间
+                //         loop: false, //循环播放
+                //         noSwiping: false, //不允许滑动
+                //         centeredSlides: false, //滑块居中显示
+                //         pagination: { //分页设置
+                //             show: true, //显示
+                //             horizontalCenter: true, //水平居中
+                //         }
+                //     }
+                // }
             },
         },
         created() {
+          
             //参数初始化
             this.mergeConfig = {
                 direction: this.config.direction || "horizontal", //水平(horizontal)或垂直(vertical)。
@@ -69,6 +69,9 @@
                 this.mergeConfig.direction = "horizontal";
             };
             this.mergeConfig.autoPlay && (this.mergeConfig.loop = true); //如果自动轮播开启,loop自动开启
+
+            this.initLoop()
+            console.log('created',this.$slots.default);
         },
         mounted() {
             this.init();
@@ -79,19 +82,22 @@
         beforeDestroyed() {
             clearInterval(this.timer);
         },
+        beforeUpdate(){
+            // 数据更新时重新检查loop元素
+            this.initLoop(true);
+        },
         methods: {
             //初始化
             init() {
+                // this.selected=this.value;
                 this.container = this.$refs["swiper-container"]; //获取swiper容器
-                this.slidesLength = this.container.children.length; //滑块的数量
+                // this.slidesLength = this.container.children.length; //滑块的数量
                 this.mergeConfig.loop ? this.selected = 2 : this.selected = 0;
-                if (this.mergeConfig.loop && !this.timer) {
-                    this.initLoop();
-                }
-                if (this.mergeConfig.pagination && this.mergeConfig.pagination.show === true && this.mergeConfig
-                    .pagination.horizontalCenter === true) {
-                    this.paginationCenter();
-                }
+                
+                // if (this.mergeConfig.pagination && this.mergeConfig.pagination.show === true && this.mergeConfig
+                //     .pagination.horizontalCenter === true) {
+                //     this.paginationCenter();
+                // }
                 this.initSildes();
                 this.mergeConfig.loop ? this.select(2) : this.select(0);
                 if (this.mergeConfig.autoPlay && this.mergeConfig.loop && !this.timer) { //自动播放
@@ -99,14 +105,14 @@
                 }
             },
             //分页器居中
-            paginationCenter() {
-                let pagin = this.$refs["swiper-pagination"];
-                this.$nextTick(() => {
-                    pagin.style.left = "50%";
-                    pagin.style.right = "auto";
-                    pagin.style["marginLeft"] = (pagin.clientWidth / 2 * -1) + "px";
-                })
-            },
+            // paginationCenter() {
+            //     let pagin = this.$refs["swiper-pagination"];
+            //     this.$nextTick(() => {
+            //         pagin.style.left = "50%";
+            //         pagin.style.right = "auto";
+            //         pagin.style["marginLeft"] = (pagin.clientWidth / 2 * -1) + "px";
+            //     })
+            // },
             // 初始化滑块数据
             initSildes() {
                 this.slides = [];
@@ -143,17 +149,34 @@
                 }
             },
             //初始化循环
-            initLoop() {
-                let slides = this.container.children;
-                if (this.slidesLength > 1) {
-                    let fragment1 = document.createDocumentFragment();
-                    let fragment2 = document.createDocumentFragment();
-                    fragment1.appendChild(slides[slides.length - 2].cloneNode(true));
-                    fragment1.appendChild(slides[slides.length - 1].cloneNode(true));
-                    fragment2.appendChild(slides[0].cloneNode(true));
-                    fragment2.appendChild(slides[1].cloneNode(true));
-                    this.container.insertBefore(fragment1, slides[0]) //向前insert
-                    this.container.appendChild(fragment2); //向最后append
+            initLoop(update) {
+                //有效元素数量
+                let slot=this.$slots.default.filter((item)=>{
+                    return item.tag==="vue-component-2-swiperItem"
+                });
+                this.slidesLength=slot.length;
+                // &&!this.timer
+                if (this.mergeConfig.loop) {
+                    if(slot.length>1){
+                        let first_1=clone(slot[0]);
+                        first_1.key=first_1.key+"_11";
+                        let first_2=clone(slot[1]);
+                        first_2.key=first_1.key+"_12";
+
+                        let last_1=clone(slot[slot.length-1]);
+                        last_1.key=last_1.key+"_21";
+                        let last_2=clone(slot[slot.length-2]);
+                        last_2.key=last_1.key+"_22";
+                       
+                        slot.push(first_1);
+                        slot.push(first_2);
+                        slot.unshift(last_1);
+                        slot.unshift(last_2);
+                        this.$slots.default=slot;
+                        this.slidesLength=slot.length-4;
+                    }else{
+                        this.mergeConfig.loop=false;
+                    }
                 }
             },
             //初始化定时器
@@ -256,6 +279,9 @@
                     let x = this.slides[index].offsetLeft * -1;
                     this.setPosition(x);
                 }
+                let index1=this.selected-2
+                // this.$emit('getIndex',index1);
+                this.$emit('input',index1);
             },
             setPosition(distance, time) {
                 if (time === 0) {
@@ -288,8 +314,9 @@
 
         &-container {
             display: flex;
-            width: 100%;
+            flex-wrap: nowrap;
             flex-direction: row;
+            width:max-content;
         }
 
         &-pagination {

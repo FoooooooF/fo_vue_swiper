@@ -1,9 +1,11 @@
 import Vue from "vue";
-import App from './App.vue'
-import Swiper from './component/index.js'
+import App from './App1.vue'
+import {Swiper,SwiperItem} from './component/index.js'
 Vue.component("Swiper",Swiper);
+Vue.component("SwiperItem",SwiperItem);
 // import Swiper from '../lib/index.js'
 Vue.use(Swiper)
+Vue.use(SwiperItem)
 
 Vue.config.productionTip = false
 

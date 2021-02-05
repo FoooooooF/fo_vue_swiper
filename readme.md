@@ -97,6 +97,11 @@ npm run build:npm
 npm run build:page
 ```
 
+##　To Do List
+- swiperItem 组件测试
+- 处理卡顿,滑动超出问题,
+- 处理数据异步更新问题
+
 ## 参考
 - Api 设计参考swiper.js
 - [手把手教你封装 Vue 组件，并使用 npm 发布](https://juejin.im/post/5b45df255188251b1d474860)
