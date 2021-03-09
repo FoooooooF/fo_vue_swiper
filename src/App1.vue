@@ -34,7 +34,14 @@
             }
         },
         mounted(){
-
+            setTimeout(()=>{
+                this.list=[
+                    {key:"2",url:"https://qiniu.epipe.cn/5430983074181545984?imageslim&imageView2/1/w/750/h/360"},
+                    {key:"3",url:"https://qiniu.epipe.cn/5464226412548325376?imageslim&imageView2/1/w/750/h/360"},
+                    {key:"1",url:"https://qiniu.epipe.cn/5456575529551388672?imageslim&imageView2/1/w/750/h/360"},
+                ];
+            },1000)
+             
         },
         methods:{
             getIndex(index){

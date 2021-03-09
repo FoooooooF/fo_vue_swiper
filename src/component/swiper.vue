@@ -27,27 +27,13 @@
                     x: 0,
                     y: 0
                 },
+                inSwipe:false, //正在滑动
             }
         },
         props: {
             value:Number,
             config: {
                 type: Object,
-                // default: function () {
-                //     return {
-                //         direction: "horizontal", //水平(horizontal)或垂直(vertical)。
-                //         autoPlay: false, //自动滚动
-                //         duration: 500, //一次滑动需要走多久
-                //         interval: 2500, //两次滑动间隔的时间
-                //         loop: false, //循环播放
-                //         noSwiping: false, //不允许滑动
-                //         centeredSlides: false, //滑块居中显示
-                //         pagination: { //分页设置
-                //             show: true, //显示
-                //             horizontalCenter: true, //水平居中
-                //         }
-                //     }
-                // }
             },
         },
         created() {
@@ -57,7 +43,7 @@
                 direction: this.config.direction || "horizontal", //水平(horizontal)或垂直(vertical)。
                 autoPlay: this.config.autoPlay === true ? true : false, //自动滚动
                 duration: this.config.duration || 500, //一次滑动需要走多久
-                interval: this.config.interval || 2500, //两次滑动间隔的时间
+                interval: this.config.interval || 5000, //两次滑动间隔的时间
                 loop: this.config.loop === true ? true : false, //循环播放
                 noSwiping: this.config.noSwiping === true ? true : false, //不允许滑动
                 centeredSlides: this.config.centeredSlides === true ? true : false, //滑块居中
@@ -94,25 +80,12 @@
                 // this.slidesLength = this.container.children.length; //滑块的数量
                 this.mergeConfig.loop ? this.selected = 2 : this.selected = 0;
                 
-                // if (this.mergeConfig.pagination && this.mergeConfig.pagination.show === true && this.mergeConfig
-                //     .pagination.horizontalCenter === true) {
-                //     this.paginationCenter();
-                // }
                 this.initSildes();
                 this.mergeConfig.loop ? this.select(2) : this.select(0);
                 if (this.mergeConfig.autoPlay && this.mergeConfig.loop && !this.timer) { //自动播放
                     this.initInterval();
                 }
             },
-            //分页器居中
-            // paginationCenter() {
-            //     let pagin = this.$refs["swiper-pagination"];
-            //     this.$nextTick(() => {
-            //         pagin.style.left = "50%";
-            //         pagin.style.right = "auto";
-            //         pagin.style["marginLeft"] = (pagin.clientWidth / 2 * -1) + "px";
-            //     })
-            // },
             // 初始化滑块数据
             initSildes() {
                 this.slides = [];
@@ -188,7 +161,7 @@
             },
             //滑动事件
             touchstart(e) {
-                if (this.mergeConfig.noSwiping) {
+                if (this.mergeConfig.noSwiping||this.inSwipe) {
                     return;
                 }
                 this.claerTimer()
@@ -197,7 +170,7 @@
             },
 
             touchmove(e) { //处理滑块的跟手效果
-                if (this.mergeConfig.noSwiping) {
+                if (this.mergeConfig.noSwiping||this.inSwipe) {
                     return;
                 }
                 this.claerTimer()
@@ -205,7 +178,9 @@
                 if (this.mergeConfig.direction === "vertical") {
                     slide = e.touches[0].clientY - this.startPos.y;
                 } else {
-                    slide = e.touches[0].clientX - this.startPos.x;
+                    if("H" === this.scrollDecoration(e.touches[0].clientX, e.touches[0].clientY) && e.cancelable && e.preventDefault()) {
+                        slide = e.touches[0].clientX - this.startPos.x;
+                    }
                 }
                 if (!this.mergeConfig.loop) { //非轮播的情况下
                     if (this.selected === 0 && slide > 0) { //第一个,且向右滑动
@@ -214,7 +189,7 @@
                         return
                     }
                 }
-                let offsetLeft = this.slides[this.selected].offsetLeft * -1;
+                let offsetLeft = this.slides && this.slides[this.selected] &&this.slides[this.selected].offsetLeft * -1;
                  if (this.mergeConfig.direction === "vertical") {
                     this.container.style.transform = `translate3d(0px, ${offsetLeft+slide}px, 0px)`;
                 } else {
@@ -222,8 +197,11 @@
                 }
                 
             },
+            scrollDecoration(e, t) {
+                return Math.abs((t - this.startPos.y) / (e - this.startPos.x)) < 2.7 ? "H" : "V"
+            },
             touchend(e) {
-                if (this.mergeConfig.noSwiping) {
+                if (this.mergeConfig.noSwiping||this.inSwipe) {
                     return;
                 }
                 let endX = e.changedTouches[0].clientX;
@@ -280,20 +258,26 @@
                     this.setPosition(x);
                 }
                 let index1=this.selected-2
-                // this.$emit('getIndex',index1);
                 this.$emit('input',index1);
             },
             setPosition(distance, time) {
+                let that=this;
                 if (time === 0) {
                     this.container.style.transition = `0ms`;
                 } else {
+                    this.inSwipe=true;
+                    setTimeout(()=>{
+                        that.inSwipe=false;
+                    },200)
                     this.container.style.transition = `${this.mergeConfig.duration}ms`;
+                   
                 }
                 if (this.mergeConfig.direction === "vertical") {
                     this.container.style.transform = `translate3d(0px, ${distance}px, 0px)`;
                 } else {
                     this.container.style.transform = `translate3d(${distance}px, 0px, 0px)`;
                 }
+               
             },
             claerTimer() {
                 clearInterval(this.timer);
